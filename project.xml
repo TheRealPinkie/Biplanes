@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+    
+    <meta title="Biplanes" package="com.therealpinkie.biplanes" version="0.0.1" company="The Real Pinkie" />
+    <app main="com.therealpinkie.biplanes.Main" path="Export" file="Biplanes" />
+    
+    <source path="Source" />
+    
+    <haxelib name="openfl" />
+    
+    <assets path="Assets" rename="assets" exclude="openfl.svg" />
+    <icon path="Assets/openfl.svg" />
+    
+</project>
