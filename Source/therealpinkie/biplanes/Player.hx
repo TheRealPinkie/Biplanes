@@ -1,4 +1,4 @@
-package com.therealpinkie.biplanes;
+package therealpinkie.biplanes;
 
 class Player {
     var biplane : Biplane;

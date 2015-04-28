@@ -1,4 +1,4 @@
-package com.therealpinkie.biplanes;
+package therealpinkie.biplanes;
 
 class Bullet {
     var x : Float;

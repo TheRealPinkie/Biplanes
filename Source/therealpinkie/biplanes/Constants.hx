@@ -1,4 +1,4 @@
-package com.therealpinkie.biplanes;
+package therealpinkie.biplanes;
 
 class Constants { // TODO: replace values with appropriate ones
     public static inline var BULLET_VELOCITY = 117.0; 

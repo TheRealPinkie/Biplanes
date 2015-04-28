@@ -1,8 +1,6 @@
-package com.therealpinkie.biplanes;
+package therealpinkie.biplanes;
 
 import openfl.display.Sprite;
-
-import com.therealpinkie.biplanes.Biplane;
 
 class Main extends Sprite {
     public function new () {

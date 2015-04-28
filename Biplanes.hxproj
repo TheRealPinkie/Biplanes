@@ -22,7 +22,7 @@
     <build>
         <option directives="" />
         <option flashStrict="False" />
-        <option mainClass="com.therealpinkie.biplanes" />
+        <option mainClass="therealpinkie.biplanes" />
         <option enabledebug="False" />
         <option additional="" />
     </build>

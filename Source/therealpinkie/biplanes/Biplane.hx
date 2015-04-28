@@ -1,6 +1,4 @@
-package com.therealpinkie.biplanes;
-
-import com.therealpinkie.biplanes.Bullet;
+package therealpinkie.biplanes;
 
 class Biplane {
     var x : Float;

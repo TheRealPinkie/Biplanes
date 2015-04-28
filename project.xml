@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
     
-    <meta title="Biplanes" package="com.therealpinkie.biplanes" version="0.0.1" company="The Real Pinkie" />
-    <app main="com.therealpinkie.biplanes.Main" path="Export" file="Biplanes" />
+    <meta title="Biplanes" package="therealpinkie.biplanes" version="0.0.1" company="The Real Pinkie" />
+    <app main="therealpinkie.biplanes.Main" path="Export" file="Biplanes" />
     
     <source path="Source" />
     
