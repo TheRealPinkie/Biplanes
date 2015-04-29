@@ -6,7 +6,7 @@ class Biplane {
     var velocity : Float;
     var angle : Float;
     var bullets : Array<Bullet>;
-    var player : Player;
+    public var player : Player;
 
     public function new (player : Player) {
         this.bullets = [new Bullet(this), new Bullet(this)];
