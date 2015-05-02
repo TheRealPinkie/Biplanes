@@ -1,3 +1,5 @@
 Export/**
 *.sublime-workspace
 *.sublime-project
+res/**
+project.xml.hxml
