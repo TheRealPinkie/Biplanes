@@ -4,7 +4,7 @@
     <meta title="Biplanes" package="therealpinkie.biplanes" version="0.0.1" company="The Real Pinkie" />
     <app main="therealpinkie.biplanes.Main" path="Export" file="Biplanes" />
 
-    <window width="640" height="480" fps="60" background="#000000" hardware="true" vsync="true" />
+    <window width="640" height="480" fps="60" background="#123456" hardware="true" vsync="true" />
     <window if="web" orientation="portrait"  />
     <window if="desktop" orientation="landscape" fullscreen="false" resizable="true" />
     <window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" />
@@ -12,7 +12,8 @@
     <set name="BUILD_DIR" value="Export" />
 
     <source path="Source" />
-    <assets path="Assets" rename="assets" />
+    <assets path="Assets/images" rename="images" />
+    <assets path="Assets/audio" rename="audio" />
     
     <haxelib name="flixel" />
     

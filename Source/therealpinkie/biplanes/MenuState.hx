@@ -11,7 +11,7 @@ class MenuState extends FlxState
 {
 	override public function create():Void
 	{
-		trace("Hello world!");
+		trace("Hello from MenuState");
 		super.create();
 	}
 

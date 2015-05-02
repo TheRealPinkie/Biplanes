@@ -1,30 +1,33 @@
 package therealpinkie.biplanes;
 
-class Bullet {
-    var x : Float;
-    var y : Float;
-    var angle : Float;
-    var lifetime : Float;
-    var owner : Biplane;
-    var is_active : Bool;
+import flixel.FlxSprite;
+import flixel.FlxG;
+import flixel.util.FlxAngle;
 
-    public function new (owner : Biplane) {
-        this.owner = owner;
-        this.is_active = false;
-    }
+class Bullet extends FlxSprite
+{
+	var lifetime:Float;
+	var owner:Player;
 
-    public function launch(x : Float, y : Float, angle : Float) {
-        this.x = x;
-        this.y = y;
-        this.angle = angle;
-        this.lifetime = 0.0;
-        this.is_active = true;
-    }
+	public function launch(owner:Player):Void
+	{
+		this.lifetime = 0;
+		this.owner = owner;
+		var position = owner.getMidpoint().addPoint(FlxAngle.rotatePoint(owner.frameWidth / 2, 0, 0, 0, owner.angle));
+		this.x = position.x;
+		this.y = position.y;
+		this.angle = owner.angle;
+		this.velocity = FlxAngle.rotatePoint(Constants.BULLET_VELOCITY, 0, 0, 0, this.angle);
+	}
 
-    public function destroy(opponent_hit : Bool) {
-        this.is_active = false;
-        this.owner.player.update_accuracy(opponent_hit);
-    }
-
-    // TODO: make a tick/update/whatever function
+	override public function update():Void
+	{
+		super.update();
+		this.lifetime += FlxG.elapsed;
+		if (this.lifetime > Constants.BULLET_DURATION || !this.isOnScreen())
+		{
+			owner.updateAccuracy(false);
+			kill();
+		}
+	}
 }
