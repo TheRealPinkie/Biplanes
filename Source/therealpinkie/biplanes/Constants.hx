@@ -6,4 +6,5 @@ class Constants
 	public static inline var BULLET_DURATION = 1.17; 
 
 	public static inline var MAX_BULLETS = 2;
+	public static inline var BIPLANE_SINGLE_ROTATION_ANGLE = 360 / 16;
 }
