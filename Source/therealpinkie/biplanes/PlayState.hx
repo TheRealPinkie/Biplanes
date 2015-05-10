@@ -12,16 +12,13 @@ class PlayState extends FlxState
 {
 	var player:Player;
 	public var bullets:FlxGroup;
-	var timeToRotate:Float;
 
 	override public function create():Void
 	{
 		player = new Player();
-		player.loadGraphic("images/biplane.png");
-		player.x = (FlxG.width - player.frameWidth) / 2;
-		player.y = (FlxG.height - player.frameHeight) / 2;
-		timeToRotate = 0;
 		add(player);
+		player.resetBiplane();
+		player.y = FlxG.camera.height - player.frameHeight;
 		
 		bullets = new FlxGroup(Constants.MAX_BULLETS);
 		for (i in 0...Constants.MAX_BULLETS)
@@ -46,12 +43,14 @@ class PlayState extends FlxState
 
 	override public function update():Void
 	{
-		timeToRotate += FlxG.elapsed;
-		if (timeToRotate > 0.5)
+		if (FlxG.keys.justPressed.R)
 		{
-			timeToRotate = 0;
-			player.angle += Constants.BIPLANE_SINGLE_ROTATION_ANGLE;
+			player.resetBiplane();
+			player.y = FlxG.camera.height - player.frameHeight;
+			for (bullet in bullets)
+				bullet.kill();
 		}
+
 		super.update();
 	}
 }
