@@ -17,7 +17,7 @@ class Bullet extends FlxSprite
 		this.x = position.x;
 		this.y = position.y;
 		this.angle = owner.angle;
-		this.velocity = FlxAngle.rotatePoint(Constants.BULLET_VELOCITY, 0, 0, 0, this.angle);
+		this.velocity = FlxAngle.rotatePoint(Constants.BULLET_SPEED, 0, 0, 0, this.angle);
 	}
 
 	override public function update():Void

@@ -19,12 +19,14 @@ class Player extends FlxSprite
 	var numHits:Int;
 	var accelerating:Bool;
 	var speed:Float;
+	var orientation:Int;
 
 	public function new() 
 	{
-		state = dead;
-		numHits = 0;
-		numShots = 0;
+		this.state = dead;
+		this.numHits = 0;
+		this.numShots = 0;
+		this.orientation = 1;
 		super();
 	}
 
@@ -37,6 +39,8 @@ class Player extends FlxSprite
 		this.speed = 0;
 		this.accelerating = false;
 		loadGraphic("images/biplane.png");
+		if (this.orientation == -1)
+			this.flipX = true;
 	}
 
 	public function updateAccuracy(opponentHit:Bool):Void
@@ -52,23 +56,23 @@ class Player extends FlxSprite
 		switch this.state
 		{
 			case onEarth:
-				this.speed += 40 * FlxG.elapsed;
-				if (this.speed >= 57)
+				this.speed += 3.84 * FlxG.elapsed * Constants.ORIGINAL_FPS;
+				if (this.speed > Constants.BIPLANE_MAX_SPEED)
 				{
-					this.speed = 57;
-					this.accelerating = false;
 					this.y -= 3;
+					this.speed = Constants.BIPLANE_MAX_SPEED;
 					this.state = flying;
+					this.accelerating = false;
 				}
 			case flying:
-				if (this.speed > 57)
+				if (this.speed > Constants.BIPLANE_MAX_SPEED)
 					return;
-				this.speed += Math.abs(Math.cos(this.angle) * 20 * FlxG.elapsed);
-				if (this.speed > 57)
-					this.speed = 57;
+				this.speed += Math.abs(Math.cos(this.angle)) * 1.92 * 
+					FlxG.elapsed * Constants.ORIGINAL_FPS;
+				if (this.speed > Constants.BIPLANE_MAX_SPEED)
+					this.speed = Constants.BIPLANE_MAX_SPEED;
 			default:
 		}
-		trace("current speed: " + this.speed);
 	}
 
 	override public function update():Void
@@ -77,9 +81,12 @@ class Player extends FlxSprite
 			speedUp();
 		switch this.state
 		{
+			case dead:
 			case onEarth:
 				if (FlxG.keys.justPressed.UP)
 					speedUp();
+				this.x += this.orientation * this.speed * 
+							FlxG.elapsed * Constants.ORIGINAL_FPS;
 			case flying:
 				if (FlxG.keys.justPressed.UP)
 					speedUp();
@@ -105,31 +112,39 @@ class Player extends FlxSprite
 					newAngle += 360;
 				this.angle = newAngle;
 
-				if (this.angle < 180)
+				this.x += Math.cos(this.angle * Math.PI / 180) * this.speed *
+							FlxG.elapsed * Constants.ORIGINAL_FPS;
+				var gravityImpact:Float = 0;
+				var verticalVelocityImpact:Float = 
+					Math.cos(this.angle * Math.PI / 180) * this.speed;
+				this.y += verticalVelocityImpact * FlxG.elapsed * Constants.ORIGINAL_FPS;
+				if (Constants.BIPLANE_SINGLE_ROTATION_ANGLE < this.angle &&
+						this.angle < 180 - Constants.BIPLANE_SINGLE_ROTATION_ANGLE)
 				{
-					this.speed += Math.sin(this.angle * Math.PI / 180) * 10 * FlxG.elapsed;
-					if (this.speed > 77)
-						this.speed = 77;
+					this.speed += Math.sin(this.angle * Math.PI / 180) * 
+						0.96 * Constants.ORIGINAL_FPS;
+					if (this.speed > Constants.BIPLANE_MAX_FALLING_SPEED)
+						this.speed = Constants.BIPLANE_MAX_FALLING_SPEED;
 				}
-				if (180 < this.angle)
+				else if (180 + Constants.BIPLANE_SINGLE_ROTATION_ANGLE < this.angle &&
+						this.angle < 360 - Constants.BIPLANE_SINGLE_ROTATION_ANGLE)
 				{
-					this.speed += Math.sin(this.angle * Math.PI / 180) * 10 * FlxG.elapsed;
+					this.speed += Math.sin(this.angle * Math.PI / 180) * 
+						0.96 * Constants.ORIGINAL_FPS;
 					if (this.speed < 0)
 						this.speed = 0;
 				}
-
-				var gravityImpact:Float = 0;
-				if (this.speed < 45)
+				if (this.speed < Constants.GRAVITY_IMPACT_THRESHOLD)
 				{
-					gravityImpact = 57 * (50 - this.speed) / 50;
-					this.y += gravityImpact * FlxG.elapsed;
+					gravityImpact = Constants.BIPLANE_MAX_SPEED * 
+						(Constants.GRAVITY_IMPACT_THRESHOLD - this.speed) / 
+						Constants.GRAVITY_IMPACT_THRESHOLD;
+					this.y += gravityImpact * FlxG.elapsed * Constants.ORIGINAL_FPS;
 				}
-				if (gravityImpact > -Math.sin(this.angle * Math.PI / 180) * this.speed)
+				if (gravityImpact > verticalVelocityImpact)
 					this.accelerating = false;
-
-			default:
 		}
-		this.velocity = FlxAngle.rotatePoint(this.speed, 0, 0, 0, this.angle);
+
 		super.update();
 	}
 }
